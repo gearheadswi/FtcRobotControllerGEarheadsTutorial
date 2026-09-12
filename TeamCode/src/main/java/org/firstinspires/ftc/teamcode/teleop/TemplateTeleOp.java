@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.hardware.Imu;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.subsystems.DriveTrain;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 
 /**
  * Starting point for a teleop OpMode. Copy this class and rename it for each driver-controlled mode.
@@ -24,6 +25,7 @@ public class TemplateTeleOp extends OpMode {
 
     private Imu imu;
     private DriveTrain driveTrain;
+    private Intake intake;
 
     @Override
     public void init() {
@@ -32,11 +34,12 @@ public class TemplateTeleOp extends OpMode {
 
         imu = robot.imu;
         driveTrain = robot.driveTrain;
+        intake = robot.intake;
     }
 
     @Override
     public void start() {
-
+        intake.start_forward();
     }
 
     @Override
@@ -52,5 +55,13 @@ public class TemplateTeleOp extends OpMode {
                 imu.getRobotHeading(),
                 gamepad1.right_trigger < 0.1
         );
+
+        if (gamepad1.aWasPressed()) {
+            intake.toggle_movement();
+        }
+
+        if (gamepad1.bWasPressed()) {
+            intake.stop();
+        }
     }
 }

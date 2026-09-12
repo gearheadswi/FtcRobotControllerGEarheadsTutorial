@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.teamcode.hardware.Imu;
 import org.firstinspires.ftc.teamcode.subsystems.DriveTrain;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 
 /**
  * Owns all hardware subsystems for the robot.
@@ -22,6 +23,7 @@ public class Robot {
     public HardwareMap hardwareMap;
     public Imu imu;
     public DriveTrain driveTrain;
+    public Intake intake;
 
     /**
      * @param opMode the active OpMode (provides the hardware map)
@@ -36,5 +38,6 @@ public class Robot {
     public void initSubsystems() {
         imu = new Imu(hardwareMap);
         driveTrain = new DriveTrain(hardwareMap);
+        intake = new Intake(hardwareMap);
     }
 }
