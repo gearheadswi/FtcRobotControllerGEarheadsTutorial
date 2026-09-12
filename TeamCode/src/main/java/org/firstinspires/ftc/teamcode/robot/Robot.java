@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.teamcode.hardware.Imu;
 import org.firstinspires.ftc.teamcode.subsystems.DriveTrain;
+import org.firstinspires.ftc.teamcode.subsystems.Hopper;
+import org.firstinspires.ftc.teamcode.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 
 /**
@@ -23,7 +25,9 @@ public class Robot {
     public HardwareMap hardwareMap;
     public Imu imu;
     public DriveTrain driveTrain;
+    public Launcher launcher;
     public Intake intake;
+    public Hopper hopper;
 
     /**
      * @param opMode the active OpMode (provides the hardware map)
@@ -39,5 +43,7 @@ public class Robot {
         imu = new Imu(hardwareMap);
         driveTrain = new DriveTrain(hardwareMap);
         intake = new Intake(hardwareMap);
+        launcher = new Launcher(hardwareMap);
+        hopper = new Hopper(hardwareMap);
     }
 }

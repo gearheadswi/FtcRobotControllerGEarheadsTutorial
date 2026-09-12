@@ -1,5 +1,11 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import static com.pedropathing.ivy.commands.Commands.instant;
+import static com.pedropathing.ivy.commands.Commands.waitMs;
+import static com.pedropathing.ivy.groups.Groups.repeat;
+import static com.pedropathing.ivy.groups.Groups.sequential;
+import com.pedropathing.ivy.Command;
+import com.pedropathing.ivy.behaviors.BlockedBehavior;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -19,4 +25,12 @@ public class Hopper {
     public void drop () {
         lifter_servo.setPosition((lift_servo_down_position));
     }
+
+    public Command SingleFlipSequence = sequential(
+            instant(this::raise),
+            waitMs(500),
+            instant(this::drop)
+    ).requiring(this).setBlockedBehavior(BlockedBehavior.QUEUE);
+
+    public Command QuadFlapSequence = repeat(SingleFlipSequence, 4);
 }

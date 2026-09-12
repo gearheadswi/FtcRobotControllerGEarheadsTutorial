@@ -1,12 +1,15 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
+import com.pedropathing.ivy.Scheduler;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.hardware.Imu;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.subsystems.DriveTrain;
+import org.firstinspires.ftc.teamcode.subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.Launcher;
 
 /**
  * Starting point for a teleop OpMode. Copy this class and rename it for each driver-controlled mode.
@@ -25,7 +28,11 @@ public class TemplateTeleOp extends OpMode {
 
     private Imu imu;
     private DriveTrain driveTrain;
+    private Launcher launcher;
     private Intake intake;
+    private Hopper hopper;
+
+    private boolean endgame = false;
 
     @Override
     public void init() {
@@ -34,12 +41,15 @@ public class TemplateTeleOp extends OpMode {
 
         imu = robot.imu;
         driveTrain = robot.driveTrain;
+        launcher = robot.launcher;
         intake = robot.intake;
+        hopper = robot.hopper;
     }
 
     @Override
     public void start() {
-        intake.start_forward();
+        launcher.launchOn();
+        intake.foward();
     }
 
     @Override
@@ -56,12 +66,26 @@ public class TemplateTeleOp extends OpMode {
                 gamepad1.right_trigger < 0.1
         );
 
-        if (gamepad1.aWasPressed()) {
-            intake.toggle_movement();
+
+        if (gamepad2.aWasPressed()){
+            hopper.QuadFlapSequence.execute();
         }
 
-        if (gamepad1.bWasPressed()) {
-            intake.stop();
+        if (gamepad2.b) {
+            intake.reverse();
+        } else {
+            intake.foward();
+        }
+
+        if (gamepad2.bWasPressed()) {
+            endgame = !endgame;
+            if (endgame){
+                intake.stop();
+                launcher.launchOff();
+            } else {
+                intake.foward();
+                launcher.launchOn();
+            }
         }
     }
 }
