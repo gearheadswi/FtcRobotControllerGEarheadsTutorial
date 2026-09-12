@@ -22,7 +22,6 @@ import org.firstinspires.ftc.teamcode.subsystems.DriveTrain;
 public class TemplateTeleOp extends OpMode {
     private Robot robot;
 
-    // Cached references to avoid repeated field lookups in the loop
     private Imu imu;
     private DriveTrain driveTrain;
 
@@ -51,7 +50,7 @@ public class TemplateTeleOp extends OpMode {
                 gamepad1.left_stick_y,
                 gamepad1.right_stick_x,
                 imu.getRobotHeading(),
-                gamepad1.right_trigger < 0.1  // false (slow mode) when trigger is held
+                gamepad1.right_trigger < 0.1
         );
     }
 }

@@ -56,7 +56,6 @@ public class DriveTrain {
         double moveMagnitude = pow(leftStickX, 2) + pow(leftStickY, 2);
         double turn = rightStickX;
 
-        // Compute each sin only once instead of twice
         double sinA = sin(PI / 4 + moveAngle - fov_heading);
         double sinB = sin(PI / 4 - moveAngle + fov_heading);
         double scale = dampener ? 1.0 : (1.0 / 3.0);
