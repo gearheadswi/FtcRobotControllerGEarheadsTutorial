@@ -29,7 +29,8 @@ public class Hopper {
     public Command SingleFlipSequence = sequential(
             instant(this::raise),
             waitMs(500),
-            instant(this::drop)
+            instant(this::drop),
+            waitMs(500)
     ).requiring(this).setBlockedBehavior(BlockedBehavior.QUEUE);
 
     public Command QuadFlapSequence = repeat(SingleFlipSequence, 4);

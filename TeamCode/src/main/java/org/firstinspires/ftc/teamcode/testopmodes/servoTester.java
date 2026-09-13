@@ -12,7 +12,7 @@ public class servoTester extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Servo servo = hardwareMap.get(Servo.class, "test servo");
-        double current_position = 0.0;
+        double current_position = 0.5;
         double increment = 0.05;
 
         while (opModeIsActive()) {

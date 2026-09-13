@@ -12,12 +12,15 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.utils.PIDF;
+
 /**
  * Field-relative mecanum drivetrain.
  * Motor config names: {@code "fr"}, {@code "fl"}, {@code "br"}, {@code "bl"}.
  */
 public class DriveTrain {
     private final DcMotorEx FR, BR, FL, BL;
+    public PIDF pid;
 
     public DriveTrain(HardwareMap hardwareMap) {
         FR = hardwareMap.get(DcMotorEx.class, "fr");
@@ -30,10 +33,12 @@ public class DriveTrain {
         BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        FR.setDirection(DcMotorSimple.Direction.REVERSE);
-        BR.setDirection(DcMotorSimple.Direction.REVERSE);
-        FL.setDirection(DcMotorSimple.Direction.FORWARD);
-        BL.setDirection(DcMotorSimple.Direction.FORWARD);
+        FL.setDirection(DcMotorSimple.Direction.REVERSE);
+        BL.setDirection(DcMotorSimple.Direction.REVERSE);
+        FR.setDirection(DcMotorSimple.Direction.FORWARD);
+        BR.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        pid = new PIDF(1, 0, 0, 0);
     }
 
     /**
@@ -64,6 +69,10 @@ public class DriveTrain {
         FL.setPower(-Range.clip(moveMagnitude * sinB + turn, -1, 1) * scale);
         BR.setPower(-Range.clip(moveMagnitude * sinB - turn, -1, 1) * scale);
         BL.setPower(-Range.clip(moveMagnitude * sinA + turn, -1, 1) * scale);
+    }
+
+    public double getPosHoldTurnPower(double heading, double target){
+        return pid.smoothAngle(heading, target);
     }
 
 }

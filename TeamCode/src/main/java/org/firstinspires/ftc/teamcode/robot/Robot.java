@@ -7,9 +7,14 @@ import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.teamcode.hardware.Imu;
 import org.firstinspires.ftc.teamcode.subsystems.DriveTrain;
+import org.firstinspires.ftc.teamcode.subsystems.FlowerDropper;
 import org.firstinspires.ftc.teamcode.subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import static com.pedropathing.ivy.commands.Commands.instant;
+import static com.pedropathing.ivy.commands.Commands.waitMs;
+import static com.pedropathing.ivy.groups.Groups.repeat;
+import static com.pedropathing.ivy.groups.Groups.sequential;
 
 /**
  * Owns all hardware subsystems for the robot.
@@ -28,6 +33,7 @@ public class Robot {
     public Launcher launcher;
     public Intake intake;
     public Hopper hopper;
+    public FlowerDropper flowerDropper;
 
     /**
      * @param opMode the active OpMode (provides the hardware map)
@@ -45,5 +51,15 @@ public class Robot {
         intake = new Intake(hardwareMap);
         launcher = new Launcher(hardwareMap);
         hopper = new Hopper(hardwareMap);
+        flowerDropper = new FlowerDropper(hardwareMap);
+    }
+
+    public void intiSequencesTeleop(){
+        hopper.drop();
+    }
+
+    public void intiSequencesAuto(){
+        hopper.drop();
+        flowerDropper.InitSequenceCommand.execute();
     }
 }
